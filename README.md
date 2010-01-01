@@ -23,7 +23,8 @@ Install and start FleetDB as described in the [FleetDB getting started guide](ht
 
 The client will raise an exception in the case of an error:
 
-    => (c/query client ["bogus"])
-    java.lang.Exception: Malformed query: unrecognized query type '"bogus"'
+    client.query(["bogus"])
+    RuntimeError: Malformed query: unrecognized query type '"bogus"'
+    
 
 See the [FleetDB getting started guide](http://fleetdb.org/docs/getting_started.html) and the [FleetDB query reference](http://fleetdb.org/docs/queries.html) for documentation on the queries available to clients.
