@@ -4,7 +4,7 @@ A Ruby client for FleetDB.
 
 ## Setup
 
-Install and start FleetDB as described in the [FleetDB getting started guide](http://fleetdb.org/docs/getting_started.html), then install this client library with:
+Download and start FleetDB as described in the [FleetDB getting started guide](http://fleetdb.org/docs/getting_started.html), then install this client library with:
 
     $ sudo gem install fleet
 
