@@ -6,14 +6,16 @@ class Fleet
     @host = host
     @port = port
     @socket = TCPSocket.new(host, port)
+    @json_encoder = Yajl::Encoder
+    @json_parser  = Yajl::Parser
   end
 
   def query(q)
-    request = Yajl::Encoder.encode(q)
+    request = @json_encoder.encode(q)
     @socket.write(request)
     @socket.write("\r\n")
     response = @socket.gets
-    status, value = Yajl::Parser.parse(response)
+    status, value = @json_parser.parse(response)
     status == 0 ? value : raise(value)
   end
 
