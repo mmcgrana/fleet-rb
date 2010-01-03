@@ -2,10 +2,10 @@ require "socket"
 require "yajl"
 
 class Fleet
-  def initialize(host, port)
-    @host = host
-    @port = port
-    @socket = TCPSocket.new(host, port)
+  def initialize(options = {})
+    @host = options[:host] || "127.0.0.1"
+    @port = options[:port] || 3400
+    @socket = TCPSocket.new(@host, @port)
     @json_encoder = Yajl::Encoder
     @json_parser  = Yajl::Parser
   end

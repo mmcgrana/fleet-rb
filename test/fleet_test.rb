@@ -3,7 +3,7 @@ require "lib/fleet"
 
 class FleetTest < Test::Unit::TestCase
   def setup
-    @client = Fleet.new("127.0.0.1", 3400)
+    @client = Fleet.new
     @client.query(["delete", "records"])
   end
 
