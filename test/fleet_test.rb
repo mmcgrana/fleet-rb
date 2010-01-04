@@ -3,7 +3,7 @@ require "lib/fleet"
 
 class FleetTest < Test::Unit::TestCase
   def setup
-    @client = Fleet.new
+    @client = Fleet.new(:timeout => 1)
     @client.query(["delete", "records"])
   end
 
@@ -20,6 +20,21 @@ class FleetTest < Test::Unit::TestCase
     assert_raise RuntimeError do
       @client.query(["bogus"])
     end
+  end
+
+  def test_conn_refused
+    assert_raise Errno::ECONNREFUSED do
+      Fleet.new(:port => 3401)
+    end
+  end
+
+  def test_query_timeout
+    server = TCPServer.open(3401)
+    f = Fleet.new(:port => 3401, :timeout => 1)
+    assert_raise Timeout::Error do
+      f.query(["ping"])
+    end
+    server.close
   end
 
   def teardown
