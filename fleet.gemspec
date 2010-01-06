@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "fleet"
-  s.version = "0.1.4"
+  s.version = "0.1.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark McGranaghan"]
@@ -15,4 +15,5 @@ Gem::Specification.new do |s|
   s.rubygems_version = "1.3.5"
   s.summary = "Ruby client for FleetDB."
   s.add_dependency "yajl-ruby", "~> 0.6.7"
+  s.add_dependency "system_timer", "~> 1.0"
 end
