@@ -2,8 +2,10 @@ require "socket"
 require "yajl"
 require "system_timer"
 
-
 class Fleet
+  class ClientError <   StandardError ; end
+  class ServerError < StandardError ; end
+
   def initialize(options = {})
     @host =     options[:host] || "127.0.0.1"
     @port =     options[:port] || 3400
@@ -18,7 +20,14 @@ class Fleet
     request = @json_encoder.encode(q)
     response = write_and_read_with_retry(request)
     status, value = @json_parser.parse(response)
-    status == 0 ? value : raise(value)
+    case status
+    when 0
+      value
+    when 1
+      raise ClientError, value
+    else
+      raise ServerError, value
+    end
   end
 
   def close
@@ -38,6 +47,9 @@ class Fleet
         socket.setsockopt Socket::IPPROTO_TCP, Socket::TCP_NODELAY, 1
         socket
       end
+    if @password
+      query(["auth", @password]).inspect
+    end
   end
 
   def disconnect
