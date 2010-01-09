@@ -18,7 +18,7 @@ class Fleet
 
   def query(q)
     request = @json_encoder.encode(q)
-    response = write_and_read_with_retry(request)
+    response = write_and_read(request)
     status, value = @json_parser.parse(response)
     case status
     when 0
@@ -55,16 +55,6 @@ class Fleet
   def disconnect
     @socket.close rescue nil
     @socket = nil
-  end
-
-  def write_and_read_with_retry(request)
-    begin
-      write_and_read(request)
-    rescue Errno::ECONNRESET, Errno::EPIPE, Errno::ECONNABORTED, Timeout::Error
-      disconnect
-      connect
-      write_and_read(request)
-    end
   end
 
   def write_and_read(request)
